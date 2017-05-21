@@ -32,6 +32,8 @@ const UserSchema = new mongoose.Schema({
     }]
 });
 
+// use of classic function instead of arrow function 
+// to get current object (this)
 UserSchema.methods.toJSON = function() {
     const user = this;
     const userObject = user.toObject();
@@ -48,6 +50,23 @@ UserSchema.methods.generateAuthToken = function () {
 
     return user.save().then(() => {
         return token;
+    });
+};
+
+UserSchema.statics.findByToken = function (token) {
+    const User = this;
+    let decoded;
+
+    try {
+        decoded = jwt.verify(token, "abc123");
+    } catch (e) {
+        return Promise.reject();
+    }
+
+    return User.findOne({
+        _id: decoded._id,
+        "tokens.token": token,
+        "tokens.access": "auth"
     });
 };
 
