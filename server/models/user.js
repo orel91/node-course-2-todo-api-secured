@@ -117,14 +117,4 @@ UserSchema.pre("save", function(next) {
 
 const User = mongoose.model("User", UserSchema);
 
-// var user = new User({
-//     email: "aurelien@infinitix.io"
-// });
-
-// user.save().then(user => {
-//     console.log("Saved user", user);
-// }, e => {
-//     console.log("Unable to save user", e);
-// });
-
 module.exports = { User };

@@ -13,22 +13,28 @@ const users = [{
     password: "userOnePass",
     tokens: [{
         access: "auth",
-        token: jwt.sign({_id: userOneId.toHexString(), access: "auth"}, "abc123").toString()
+        token: jwt.sign({_id: userOneId, access: "auth"}, "abc123").toString()
     }]
 }, {
     _id: userTwoId,
     email: "contact@infinitix.io",
-    password: "userTwoPass"
+    password: "userTwoPass",
+    tokens: [{
+        access: "auth",
+        token: jwt.sign({_id: userTwoId, access: "auth"}, "abc123").toString()
+    }]
 }];
 
 const todos = [{
     _id: new ObjectID(),
-    text: "First test todo"
+    text: "First test todo",
+    _creator: userOneId
 }, {
     _id: new ObjectID(),
     text: "Second text todo",
     completed: true,
-    completedAt: 333
+    completedAt: 333,
+    _creator: userTwoId
 }];
 
 const populateTodos = (done) => {
